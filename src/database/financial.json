@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "financialData": [
+      {
+        "id": 1,
+        "price": 20,
+        "typesOfExpenses": "health",
+        "date": "18/01/2022",
+        "name": "Shampoo"
+      },
+      {
+        "id": 2,
+        "price": 50,
+        "typesOfExpenses": "food",
+        "date": "20/01/2022",
+        "name": "McDonald's"
+      }
+    ]
+  }
+]
