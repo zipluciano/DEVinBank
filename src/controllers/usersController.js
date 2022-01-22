@@ -1,4 +1,8 @@
-const { getUserById } = require("../services/users.service");
+const {
+  getUserById,
+  getUsersDatabase,
+  writeDatabase,
+} = require("../services/users.service");
 
 module.exports = {
   async requestedUser(req, res) {
@@ -24,14 +28,17 @@ module.exports = {
     const checks = [
       {
         has: Boolean(user.length),
+        value: "id",
         errorMessage: "❌ The requested user doesn't exists in database",
       },
       {
         has: Boolean(name),
+        value: "name",
         errorMessage: "❌ There are missing name in body request",
       },
       {
         has: Boolean(email),
+        value: "e-mail",
         errorMessage: "❌ There are missing e-mail in body request",
       },
     ];
@@ -40,19 +47,22 @@ module.exports = {
       if (errors.length) {
         throw new Error();
       }
-      // TODO: create service to update user database
-      console.log(req.body, checks, errors);
+      const userDatabase = await getUsersDatabase("users.json");
       const newUserData = { ...user[0], name, "e-mail": email };
-      console.log(
-        "🚀 ~ file: usersController.js ~ line 29 ~ updateUser ~ newUserData",
-        newUserData
-      );
-      return res.status(200).json([newUserData]);
+      const rawArray = userDatabase.filter(item => item.id !== Number(id));
+      rawArray.push(newUserData);
+      rawArray.sort((a, b) => (a.id > b.id ? 1 : -1));
+      writeDatabase("users.json", rawArray);
+
+      return res.status(200).json({ message: "Successfully updated user" });
     } catch (error) {
       return res.status(400).json(
         errors.map(item => {
-          console.log(item.errorMessage);
-          return { errorMessage: item.errorMessage };
+          console.log(
+            `The ${item.value} value isn't correct\n`,
+            item.errorMessage
+          );
+          return { value: item.value, errorMessage: item.errorMessage };
         })
       );
     }
