@@ -5,4 +5,11 @@ function writeDatabase(filename, rawData) {
   fs.writeFileSync(`src/database/${filename}`, data, "utf-8");
 }
 
-module.exports = { writeDatabase };
+const removeFile = path => {
+  fs.rmSync(`${path}`, {
+    recursive: true,
+    force: true,
+  });
+};
+
+module.exports = { writeDatabase, removeFile };

@@ -1,4 +1,4 @@
-const sendFile = require("./actions/financial/sendFile");
+const sendFile = require("./actions/finance/sendFile");
 
 module.exports = {
   sendFile,

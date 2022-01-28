@@ -1,4 +1,5 @@
 /node_modules
+/src/tests
 .env
 Módulo 2 - Projeto 3.pdf
 *.xlsx

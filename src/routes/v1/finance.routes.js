@@ -1,18 +1,29 @@
+const { getUserById } = require("../../services/users.service");
 const express = require("express");
+const financeRoutes = express.Router();
+const financeController = require("../../controllers/financeController");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "src/tests");
+    cb(null, "src/database/sheets");
   },
   filename: (req, file, cb) => {
-    const filename = `${req.params.userId}--` + file.originalname;
+    const { userId } = req.params;
+    const filename = `${userId}_financeFile.xlsx`;
     cb(null, filename);
   },
 });
 
-const upload = multer({ storage: storage });
-const financeRoutes = express.Router();
-const financeController = require("../../controllers/financeController");
+const multerFilter = (req, file, cb) => {
+  const { userId } = req.params;
+  if (getUserById(userId).length) {
+    cb(null, true);
+  } else {
+    cb(new Error("❌ The requested user doesn't exists in database"), false);
+  }
+};
+
+const upload = multer({ storage: storage, fileFilter: multerFilter });
 
 financeRoutes.post(
   "/finance/:userId",
