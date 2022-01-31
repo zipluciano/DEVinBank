@@ -1,0 +1,131 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "My API",
+    "description": "DEVinBank - Conta 365",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3030/",
+      "description": "Development server",
+      "templates": {
+        "scheme": {
+          "enum": [
+            "http",
+            "https"
+          ],
+          "default": "http"
+        }
+      }
+    },
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "Endpoints"
+    },
+    {
+      "name": "Finance",
+      "description": "Endpoints"
+    }
+  ],
+  "paths": {
+    "/api/user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to create a user in database",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/user/{id}": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to update infos of a specific user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to get infos of a specific user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            },
+            "type": "integer"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/finance/{userId}": {
+      "post": {
+        "tags": [
+          "Finance"
+        ],
+        "description": "Endpoint to create a finance database of a existent user and fill it with infos of a sended xlsx file",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/finance/{userId}/{financialId}": {
+      "delete": {
+        "tags": [
+          "Finance"
+        ],
+        "description": "Endpoint to delete financial data of a specific user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "financialId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}
