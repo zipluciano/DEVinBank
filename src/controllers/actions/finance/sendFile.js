@@ -8,6 +8,8 @@ const { typesOfExpenses } = require("../../../utils/constants");
 const XLSX = require("xlsx");
 
 async function sendFile(req, res) {
+  // #swagger.tags.name = ['Finance']
+  // #swagger.description = 'Endpoint to send xlsx files and create user finance data'
   const { userId } = await req.params;
   const excelFilePath = `src/database/sheets/${userId}_financeFile.xlsx`;
   let dataChecking;

@@ -28,7 +28,15 @@ const upload = multer({ storage: storage, fileFilter: multerFilter });
 financeRoutes.post(
   "/finance/:userId",
   upload.single("finance"),
+  // #swagger.tags = ['Finance']
+  // #swagger.description = 'Endpoint to create a finance database of a existent user and fill it with infos of a sended xlsx file'
   financeController.sendFile
+);
+financeRoutes.delete(
+  "/finance/:userId/:financialId",
+  // #swagger.tags = ['Finance']
+  // #swagger.description = 'Endpoint to delete financial data of a specific user'
+  financeController.deleteFinance
 );
 
 module.exports = financeRoutes;
